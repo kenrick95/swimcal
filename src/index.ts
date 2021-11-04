@@ -40,6 +40,15 @@ export class AppIndex extends LitElement {
       margin: 0 2rem;
       user-select: none;
     }
+    footer {
+      margin-top: 4rem;
+      margin-bottom: 2rem;
+      color: var(--text-muted);
+      font-size: 0.5rem;
+    }
+    footer > a {
+      color: var(--text-muted);
+    }
   `;
   render() {
     const currentYearSwimData = swimMemo(() => {
@@ -51,6 +60,15 @@ export class AppIndex extends LitElement {
         <button slot="prev" @click=${this._navigateToPreviousYear}>&lt;</button>
         <button slot="next" @click=${this._navigateToNextYear}>&gt;</button>
       </calendar-year>
+      <footer>
+        Favicon by Maxim Kulikov from
+        <a
+          target="_blank"
+          rel="noreferrer noopener"
+          href="https://thenounproject.com/term/swim/2713615/"
+          >the Noun Project</a
+        >
+      </footer>
     `;
   }
 
