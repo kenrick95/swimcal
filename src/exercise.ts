@@ -19,7 +19,7 @@ export interface Exercise {
   }>;
   calories: number;
   distance: number;
-  distanceUnit: 'Kilometer';
+  distanceUnit: 'Kilometer' | 'Mile';
   duration: TimeInMs;
   activeDuration: TimeInMs;
   logType: 'manual' | 'mobile_run';
@@ -69,4 +69,54 @@ export function yearFilter(year: number) {
     const time = new Date(exercise.startTime + ' GMT');
     return time.getFullYear() === year;
   };
+}
+
+export function yearMonthFilter(year: number, month: number) {
+  return (exercise: Exercise) => {
+    const time = new Date(exercise.startTime + ' GMT');
+    return time.getFullYear() === year && time.getMonth() + 1 === month;
+  };
+}
+export function yearMonthDateFilter(year: number, month: number, date: number) {
+  return (exercise: Exercise) => {
+    const time = new Date(exercise.startTime + ' GMT');
+    return (
+      time.getFullYear() === year &&
+      time.getMonth() + 1 === month &&
+      time.getDate() === date
+    );
+  };
+}
+
+export function totalDistanceInKm(exercises: Exercise[]): number {
+  let result = 0;
+  for (const exercise of exercises) {
+    result +=
+      exercise.distanceUnit === 'Kilometer'
+        ? exercise.distance
+        : exercise.distance * 1.609344;
+  }
+  return result;
+}
+
+export function totalDurationInMs(exercises: Exercise[]): number {
+  let result = 0;
+  for (const exercise of exercises) {
+    result += exercise.duration;
+  }
+  return result;
+}
+
+export function formatDistance(km: number): string {
+  return `${Math.round(100 * km) / 100} km`;
+}
+export function formatDuration(ms: number): string {
+  const seconds = ms / 1000;
+  if (seconds < 3600) {
+    return `${Math.round((ms / 1000 / 60) * 100) / 100} mins`;
+  }
+  return `${Math.round((ms / 1000 / 3600) * 100) / 100} hrs`;
+}
+export function formatCount(count: number, unit: [string, string]): string {
+  return count > 0 ? `${count} ${unit[1]}` : `${count} ${unit[0]}`
 }
