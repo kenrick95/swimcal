@@ -118,5 +118,5 @@ export function formatDuration(ms: number): string {
   return `${Math.round((ms / 1000 / 3600) * 100) / 100} hrs`;
 }
 export function formatCount(count: number, unit: [string, string]): string {
-  return count > 0 ? `${count} ${unit[1]}` : `${count} ${unit[0]}`
+  return count > 1 ? `${count} ${unit[1]}` : `${count} ${unit[0]}`
 }

@@ -22,6 +22,8 @@ export class CalendarMonth extends LitElement {
   static styles = css`
     h3 {
       text-align: center;
+      margin-top: 0;
+      margin-bottom: 0.8rem;
     }
     .stats {
       display: flex;

@@ -19,18 +19,21 @@ export class CalendarDay extends LitElement {
     .day {
       text-align: center;
       aspect-ratio: 1;
-      position: relative;
       display: flex;
       align-items: center;
       justify-content: center;
     }
+    .date {
+      position: relative;
+      width: 1.2rem;
+    }
     .count {
       position: absolute;
-      right: 8px;
-      top: 8px;
+      right: -4px;
+      top: 1px;
       font-size: 0.5rem;
       border-radius: 50%;
-      background-color: hsl(212, 85%, 50%);
+      background-color: var(--links);
       width: 6px;
       height: 6px;
     }
@@ -61,8 +64,10 @@ export class CalendarDay extends LitElement {
           )}`
         : null}
     >
-      <div class="date">${this.date}</div>
-      ${this.swimData.length ? html`<div class="count"></div>` : null}
+      <div class="date">
+        ${this.date}
+        ${this.swimData.length ? html`<div class="count"></div>` : null}
+      </div>
     </div>`;
   }
 }

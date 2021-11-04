@@ -41,7 +41,7 @@ export class CalendarYear extends LitElement {
       display: grid;
       grid-template-columns: 1fr 1fr 1fr;
       grid-template-rows: 1fr 1fr 1fr 1fr;
-      grid-gap: 1rem;
+      grid-gap: 1.6rem;
     }
   `;
   @property({ type: Number }) year: number = new Date().getFullYear();
@@ -75,7 +75,11 @@ export class CalendarYear extends LitElement {
       );
     }
     return html`
-      <h2>${this.year}</h2>
+      <h2>
+        <slot name="prev"></slot>
+        ${this.year}
+        <slot name="next"></slot>
+      </h2>
       <div class="stats">
         <div>${formatCount(this.swimData.length, ['swim', 'swims'])}</div>
         <div>${formatDistance(totalDistance)}</div>
