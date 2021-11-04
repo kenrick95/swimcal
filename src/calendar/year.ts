@@ -1,5 +1,6 @@
 import { html, css, LitElement } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
+import { Exercise } from '../exercise';
 
 import './month';
 
@@ -19,8 +20,10 @@ export class CalendarYear extends LitElement {
     }
   `;
   @property({ type: Number }) year: number = new Date().getFullYear();
+  @property({ type: Array  }) swimData: Array<Exercise> = [];
 
   render() {
+    console.log('currentYearSwimData', this.swimData);
     let content = [];
     for (let i = 0; i < 12; i++) {
       content.push(
@@ -31,6 +34,7 @@ export class CalendarYear extends LitElement {
     }
     return html`
       <h2>${this.year}</h2>
+      <div>Number of swims: ${this.swimData.length}</div>
       <div class="months">${content}</div>
     `;
   }
