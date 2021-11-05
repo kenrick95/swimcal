@@ -28,6 +28,12 @@ export interface Exercise {
     distance: boolean;
     steps: boolean;
   };
+  source?: void | {
+    type: 'app';
+    name: 'Fitbit for Windows Phone' | 'Fitbit for Android';
+    id: string;
+    url: string;
+  };
   speed: number;
   pace: number;
   lastModified: UtcDateTime;
@@ -59,6 +65,15 @@ async function getExerciseData(): Promise<Array<Exercise>> {
   });
   return exerciseData;
 }
+
+function getNormalizedDate(exercise: Exercise): Date {
+  if (exercise.source && exercise.source.name === 'Fitbit for Windows Phone') {
+    // NOTE: Somehow those from this source reports in local time zone (but not specified in entry), assume time zone is same as current time zone
+    return new Date(exercise.startTime);
+  }
+  return new Date(exercise.startTime + ' GMT');
+}
+
 export async function getSwimData() {
   return (await getExerciseData()).filter((exercise) => {
     return exercise.activityName === 'Swim';
@@ -66,20 +81,20 @@ export async function getSwimData() {
 }
 export function yearFilter(year: number) {
   return (exercise: Exercise) => {
-    const time = new Date(exercise.startTime + ' GMT');
+    const time = getNormalizedDate(exercise);
     return time.getFullYear() === year;
   };
 }
 
 export function yearMonthFilter(year: number, month: number) {
   return (exercise: Exercise) => {
-    const time = new Date(exercise.startTime + ' GMT');
+    const time = getNormalizedDate(exercise);
     return time.getFullYear() === year && time.getMonth() + 1 === month;
   };
 }
 export function yearMonthDateFilter(year: number, month: number, date: number) {
   return (exercise: Exercise) => {
-    const time = new Date(exercise.startTime + ' GMT');
+    const time = getNormalizedDate(exercise);
     return (
       time.getFullYear() === year &&
       time.getMonth() + 1 === month &&
@@ -118,5 +133,5 @@ export function formatDuration(ms: number): string {
   return `${Math.round((ms / 1000 / 3600) * 100) / 100} hrs`;
 }
 export function formatCount(count: number, unit: [string, string]): string {
-  return count > 1 ? `${count} ${unit[1]}` : `${count} ${unit[0]}`
+  return count > 1 ? `${count} ${unit[1]}` : `${count} ${unit[0]}`;
 }
