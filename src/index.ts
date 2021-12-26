@@ -6,6 +6,7 @@ import './calendar/year';
 
 import { Exercise, getSwimData, yearFilter } from './exercise';
 import { createMemo } from './memo';
+import Favicon from './favicon.svg';
 
 const swimMemo = createMemo();
 
@@ -31,7 +32,15 @@ export class AppIndex extends LitElement {
       margin: 0 auto;
     }
     h1 {
-      text-align: center;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    h1 > img {
+      height: 1.6em;
+      width: 1.6em;
+      margin-right: 0.2em;
+      margin-top: 0.38em; // To align with baseline of text
     }
     button {
       all: unset;
@@ -55,7 +64,7 @@ export class AppIndex extends LitElement {
       return this.swimData.filter(yearFilter(this.year));
     }, [this.year, this.swimData.length]);
     return html`
-      <h1>Swimcal</h1>
+      <h1><img src="${Favicon}" width="32" height="32" /> Swimcal</h1>
       <calendar-year year="${this.year}" .swimData=${currentYearSwimData}>
         <button slot="prev" @click=${this._navigateToPreviousYear}>&lt;</button>
         <button slot="next" @click=${this._navigateToNextYear}>&gt;</button>
