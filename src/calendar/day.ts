@@ -22,20 +22,14 @@ export class CalendarDay extends LitElement {
       display: flex;
       align-items: center;
       justify-content: center;
+      border-radius: 50%;
     }
     .date {
-      position: relative;
-      width: 1.2rem;
+      font-size: 1rem;
     }
     .marker {
-      position: absolute;
-      left: -4px;
-      top: -3px;
-      font-size: 0.5rem;
-      border-radius: 50%;
       border: 3px solid var(--links);
-      width: 1.4rem;
-      height: 1.4rem;
+      cursor: help;
     }
   `;
   @property({ type: Number }) date: number = new Date().getDate();
@@ -54,7 +48,7 @@ export class CalendarDay extends LitElement {
     );
 
     return html`<div
-      class="day"
+      class="day ${this.swimData.length ? 'marker ' : null}"
       title=${this.swimData.length
         ? `${formatCount(this.swimData.length, [
             'swim',
@@ -64,10 +58,7 @@ export class CalendarDay extends LitElement {
           )}`
         : null}
     >
-      <div class="date">
-        ${this.date}
-        ${this.swimData.length ? html`<div class="marker"></div>` : null}
-      </div>
+      <div class="date">${this.date}</div>
     </div>`;
   }
 }
