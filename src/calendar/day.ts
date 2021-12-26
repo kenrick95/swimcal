@@ -27,15 +27,15 @@ export class CalendarDay extends LitElement {
       position: relative;
       width: 1.2rem;
     }
-    .count {
+    .marker {
       position: absolute;
-      right: -4px;
-      top: 1px;
+      left: -4px;
+      top: -3px;
       font-size: 0.5rem;
       border-radius: 50%;
-      background-color: var(--links);
-      width: 6px;
-      height: 6px;
+      border: 3px solid var(--links);
+      width: 1.4rem;
+      height: 1.4rem;
     }
   `;
   @property({ type: Number }) date: number = new Date().getDate();
@@ -66,7 +66,7 @@ export class CalendarDay extends LitElement {
     >
       <div class="date">
         ${this.date}
-        ${this.swimData.length ? html`<div class="count"></div>` : null}
+        ${this.swimData.length ? html`<div class="marker"></div>` : null}
       </div>
     </div>`;
   }
